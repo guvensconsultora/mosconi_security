@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú "Transacciones de Pago" visible sin modo desarrollador -->
+    <!-- Por qué: los usuarios 3 y 4 necesitan acceder a payment.transaction -->
+    <!-- pero no tienen modo dev activado, donde normalmente vive este menú -->
+    <menuitem
+        id="menu_payment_transaction_website"
+        name="Transacciones de Pago"
+        parent="website_sale.menu_orders"
+        action="payment.action_payment_transaction"
+        groups="mosconi_security.group_sale_crazycompras,mosconi_security.group_sale_tucompradigital"
+        sequence="30"/>
+</odoo>

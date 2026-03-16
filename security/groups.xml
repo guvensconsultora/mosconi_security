@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Grupo para usuarios que solo operan en Crazy Compras (website_id=1) -->
+    <!-- Por qué: separar usuarios que solo gestionan ventas minoristas del resto -->
+    <record id="group_sale_crazycompras" model="res.groups">
+        <field name="name">Ventas - Crazy Compras</field>
+        <field name="comment">Usuarios restringidos a ver solo pedidos del sitio Crazy Compras (website_id=1). Usuario 3: Corina Sosa.</field>
+    </record>
+
+    <!-- Grupo para usuarios que solo operan en Tu Compra Digital (website_id=3) -->
+    <!-- Por qué: separar usuarios que solo gestionan ventas mayoristas del resto -->
+    <record id="group_sale_tucompradigital" model="res.groups">
+        <field name="name">Ventas - Tu Compra Digital</field>
+        <field name="comment">Usuarios restringidos a ver solo pedidos del sitio Tu Compra Digital (website_id=3). Usuario 4: Micaela Santana.</field>
+    </record>
+</odoo>

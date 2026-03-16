@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_transaction_crazycompras,payment.transaction crazycompras,payment.model_payment_transaction,mosconi_security.group_sale_crazycompras,1,0,0,0
+access_payment_transaction_tucompradigital,payment.transaction tucompradigital,payment.model_payment_transaction,mosconi_security.group_sale_tucompradigital,1,0,0,0

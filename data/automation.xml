@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Acción de servidor: enviar mail usando template -->
+    <!-- Por qué: en Odoo 18 'state=email' no existe, usamos 'code' para enviar con template -->
+    <record id="action_server_payment_notify" model="ir.actions.server">
+        <field name="name">Enviar notificación transacción de pago</field>
+        <field name="model_id" ref="payment.model_payment_transaction"/>
+        <field name="state">code</field>
+        <field name="code">
+# Enviar mail usando el template definido en mosconi_security
+template = env.ref('mosconi_security.mail_template_payment_transaction_notify')
+for rec in records:
+    template.send_mail(rec.id, force_send=True)
+        </field>
+    </record>
+
+    <!-- Acción automatizada: enviar mail cuando transacción pasa a pending -->
+    <!-- Por qué: Corina y Carlos necesitan saber cuando un cliente intenta pagar -->
+    <record id="automation_payment_pending_notify" model="base.automation">
+        <field name="name">Notificar transacción pendiente</field>
+        <field name="model_id" ref="payment.model_payment_transaction"/>
+        <field name="trigger">on_state_set</field>
+        <field name="trigger_field_ids" eval="[(4, ref('payment.field_payment_transaction__state'))]"/>
+        <field name="filter_domain">[('state', '=', 'pending')]</field>
+        <field name="action_server_ids" eval="[(4, ref('mosconi_security.action_server_payment_notify'))]"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Acción automatizada: enviar mail cuando transacción pasa a done -->
+    <!-- Por qué: Corina y Carlos necesitan saber cuando se confirma un pago -->
+    <record id="automation_payment_done_notify" model="base.automation">
+        <field name="name">Notificar transacción confirmada</field>
+        <field name="model_id" ref="payment.model_payment_transaction"/>
+        <field name="trigger">on_state_set</field>
+        <field name="trigger_field_ids" eval="[(4, ref('payment.field_payment_transaction__state'))]"/>
+        <field name="filter_domain">[('state', '=', 'done')]</field>
+        <field name="action_server_ids" eval="[(4, ref('mosconi_security.action_server_payment_notify'))]"/>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

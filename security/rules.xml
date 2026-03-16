@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Record Rule: usuarios del grupo Crazycompras solo ven pedidos de website_id=1 -->
+    <!-- Por qué: los usuarios 3 y 4 no deben ver pedidos de los sitios Mosconi y Tu Compra Digital -->
+    <!-- Patrón: domain filter por website_id, aplicado solo al grupo restringido -->
+    <record id="rule_sale_order_crazycompras_only" model="ir.rule">
+        <field name="name">Pedidos: solo Crazy Compras</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <!-- Tip: website_id=False cubre pedidos creados manualmente desde backend -->
+        <field name="domain_force">[('website_id', 'in', [1, False])]</field>
+        <field name="groups" eval="[(4, ref('mosconi_security.group_sale_crazycompras'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Record Rule: usuarios del grupo TuCompraDigital solo ven pedidos de website_id=3 -->
+    <!-- Por qué: Micaela Santana (usuario 4) solo gestiona ventas mayoristas -->
+    <record id="rule_sale_order_tucompradigital_only" model="ir.rule">
+        <field name="name">Pedidos: solo Tu Compra Digital</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <!-- Tip: website_id=False cubre pedidos creados manualmente desde backend -->
+        <field name="domain_force">[('website_id', 'in', [3, False])]</field>
+        <field name="groups" eval="[(4, ref('mosconi_security.group_sale_tucompradigital'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

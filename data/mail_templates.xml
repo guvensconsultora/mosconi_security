@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template de notificación cuando una transacción de pago cambia de estado -->
+    <!-- Por qué: Corina y Carlos necesitan saber en tiempo real cuando un cliente intenta o confirma un pago -->
+    <record id="mail_template_payment_transaction_notify" model="mail.template">
+        <field name="name">Notificación de Transacción de Pago</field>
+        <field name="model_id" ref="payment.model_payment_transaction"/>
+        <field name="subject">Transacción de Pago - {{ object.reference }} - {{ object.state }}</field>
+        <!-- Destinatarios fijos: Corina y Carlos -->
+        <field name="email_to">marketing@mosconi.com.ar,cschmidt@mosconi.com.ar</field>
+        <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif; max-width: 600px;">
+    <h2 style="color: #875A7B;">Notificación de Transacción de Pago</h2>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Referencia</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ object.reference }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Estado</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">
+                {% if object.state == 'pending' %}
+                    <span style="color: #e67e22;">⏳ Pendiente de confirmación</span>
+                {% elif object.state == 'done' %}
+                    <span style="color: #27ae60;">✅ Pago confirmado</span>
+                {% else %}
+                    {{ object.state }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Monto</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ object.amount }} {{ object.currency_id.name }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Cliente</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ object.partner_id.name }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Proveedor de Pago</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ object.provider_id.name }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Fecha</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">{{ object.last_state_change }}</td>
+        </tr>
+    </table>
+    <!-- Link directo al registro en el backend -->
+    <div style="margin-top: 20px;">
+        <a href="{{ object.get_base_url() }}/odoo/payment/transactions/{{ object.id }}"
+           style="background-color: #875A7B; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">
+            Ver Transacción
+        </a>
+    </div>
+</div>
+]]></field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>
