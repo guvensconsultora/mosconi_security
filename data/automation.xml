@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Acción de servidor: enviar mail usando template -->
-    <!-- Por qué: en Odoo 18 'state=email' no existe, usamos 'code' para enviar con template -->
+    <!-- Acción de servidor: enviar mail via método Python en payment.transaction -->
+    <!-- Por qué: el HTML se construye directamente en Python, sin motor de plantillas -->
     <record id="action_server_payment_notify" model="ir.actions.server">
         <field name="name">Enviar notificación transacción de pago</field>
         <field name="model_id" ref="payment.model_payment_transaction"/>
         <field name="state">code</field>
-        <field name="code">
-# Enviar mail usando el template definido en mosconi_security
-template = env.ref('mosconi_security.mail_template_payment_transaction_notify')
-for rec in records:
-    template.send_mail(rec.id, force_send=True)
-        </field>
+        <field name="code">records._send_payment_notification()</field>
     </record>
 
     <!-- Acción automatizada: enviar mail cuando transacción pasa a pending -->

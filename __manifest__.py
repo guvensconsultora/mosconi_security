@@ -9,7 +9,6 @@
         'security/groups.xml',
         'security/ir.model.access.csv',
         'security/rules.xml',
-        'data/mail_templates.xml',
         'data/automation.xml',
         'views/menus.xml',
     ],
