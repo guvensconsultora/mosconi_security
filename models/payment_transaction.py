@@ -84,6 +84,6 @@ class PaymentTransaction(models.Model):
                 rec.reference or '', rec.state or '')
             self.env['mail.mail'].create({
                 'subject': subject,
-                'email_to': 'marketing@mosconi.com.ar,cschmidt@mosconi.com.ar,info@yaguven.com',
+                'email_to': 'marketing@crazycompras.com.ar,cschmidt@mosconi.com.ar,info@yaguven.com',
                 'body_html': Markup(body),
             }).send()

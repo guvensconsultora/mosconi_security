@@ -7,7 +7,7 @@
         <field name="model_id" ref="payment.model_payment_transaction"/>
         <field name="subject">Transacción de Pago - ${object.reference} - ${object.state}</field>
         <!-- Destinatarios fijos: Corina y Carlos -->
-        <field name="email_to">marketing@mosconi.com.ar,cschmidt@mosconi.com.ar</field>
+        <field name="email_to">marketing@crazycompras.com.ar,cschmidt@mosconi.com.ar</field>
         <field name="body_html"><![CDATA[
 <div style="font-family: Arial, sans-serif; max-width: 600px;">
     <h2 style="color: #875A7B;">Notificación de Transacción de Pago</h2>

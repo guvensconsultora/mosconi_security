@@ -33,7 +33,7 @@ Cuando un cliente realiza un pago online, el sistema envía automáticamente un 
 
 El email incluye: referencia, estado, monto, cliente, proveedor de pago, fecha y un botón directo para ver la transacción en el backend.
 
-**Destinatarios fijos:** marketing@mosconi.com.ar, cschmidt@mosconi.com.ar
+**Destinatarios fijos:** marketing@crazycompras.com.ar, cschmidt@mosconi.com.ar
 
 ### Menú de transacciones
 
